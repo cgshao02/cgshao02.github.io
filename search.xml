@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>KafKa实战问题</title>
+      <link href="/KafKa/KafKa%E5%AE%9E%E6%88%98%E9%97%AE%E9%A2%98/"/>
+      <url>/KafKa/KafKa%E5%AE%9E%E6%88%98%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h1 id="消息积压"><a href="#消息积压" class="headerlink" title="消息积压"></a>消息积压</h1><p>2024&#x2F;9&#x2F;23</p><p>消费者 逻辑 发生NPE导致–》 消费者不断重试消费—》发生消息积压—〉存在有的消息一直得不到消费</p><p>修改</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consume.exception.retry.count = 1 //表示失败后 重试消费1次</span><br></pre></td></tr></table></figure><p><img src="https://raw.githubusercontent.com/cgshao02/BLOG_images/main/image-20240923140747749.png?token=A5BZ7JLVJDUYNCL5PKYCQY3G6EDAK" alt="image-20240923140747749"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> -KafKa </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> KafKa </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>数据库慢查询</title>
       <link href="/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%BB%A1%E6%9F%A5%E8%AF%A2/"/>
       <url>/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%BB%A1%E6%9F%A5%E8%AF%A2/</url>
