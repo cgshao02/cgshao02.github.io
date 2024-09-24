@@ -8,12 +8,12 @@
       <link href="/KafKa/KafKa%E5%AE%9E%E6%88%98%E9%97%AE%E9%A2%98/"/>
       <url>/KafKa/KafKa%E5%AE%9E%E6%88%98%E9%97%AE%E9%A2%98/</url>
       
-        <content type="html"><![CDATA[<h1 id="消息积压"><a href="#消息积压" class="headerlink" title="消息积压"></a>消息积压</h1><p>2024&#x2F;9&#x2F;23</p><p>消费者 逻辑 发生NPE导致–》 消费者不断重试消费—》发生消息积压—〉存在有的消息一直得不到消费</p><p>修改</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consume.exception.retry.count = 1 //表示失败后 重试消费1次</span><br></pre></td></tr></table></figure><p><img src="https://raw.githubusercontent.com/cgshao02/BLOG_images/main/image-20240923140747749.png?token=A5BZ7JLVJDUYNCL5PKYCQY3G6EDAK" alt="image-20240923140747749"></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="消息积压"><a href="#消息积压" class="headerlink" title="消息积压"></a>消息积压</h1><p>2024&#x2F;9&#x2F;23</p><p>消费者 逻辑 发生NPE导致–》 消费者不断重试消费—》发生消息积压—〉存在有的消息一直得不到消费</p><p>修改</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consume.exception.retry.count = 1 //表示失败后 重试消费1次</span><br></pre></td></tr></table></figure><p><img src="https://raw.githubusercontent.com/cgshao02/BLOG_images/main/image-20240923140747749.png?token=A5BZ7JLVJDUYNCL5PKYCQY3G6EDAK"></p>]]></content>
       
       
       <categories>
           
-          <category> -KafKa </category>
+          <category> KafKa </category>
           
       </categories>
       
@@ -30,8 +30,8 @@
     
     <entry>
       <title>数据库慢查询</title>
-      <link href="/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%BB%A1%E6%9F%A5%E8%AF%A2/"/>
-      <url>/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%BB%A1%E6%9F%A5%E8%AF%A2/</url>
+      <link href="/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%85%A2%E6%9F%A5%E8%AF%A2/"/>
+      <url>/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%85%A2%E6%9F%A5%E8%AF%A2/</url>
       
         <content type="html"><![CDATA[<h2 id="一、遇到的慢查询问题"><a href="#一、遇到的慢查询问题" class="headerlink" title="一、遇到的慢查询问题"></a>一、遇到的慢查询问题</h2><h3 id="1、表的索引区分度小导致的满查询"><a href="#1、表的索引区分度小导致的满查询" class="headerlink" title="1、表的索引区分度小导致的满查询"></a>1、表的索引区分度小导致的满查询</h3><p>为什么会命中不同的索引？</p><blockquote><p>索引的选择是优化器的工作，mysql的优化器选择索引时会极大的依赖“统计信息”。但是本质原因是原来的索引区分度很差</p></blockquote><h4 id="统计信息又是什么时候执行的？"><a href="#统计信息又是什么时候执行的？" class="headerlink" title="统计信息又是什么时候执行的？"></a>统计信息又是什么时候执行的？</h4><p>统计信息更新分为手动更新与自动更新。</p><p><strong>手动更新</strong></p><ol><li>ANALYZE table UPDATE HISTOGRAM ON <col_name> WITH <N> BUCKETS &#x2F;&#x2F;更新某个表的某个列的直方图</li><li>ANALYZE table DROP HISTOGRAM ON col_name &#x2F;&#x2F;删除某个表的直方图</li><li>ANALYZE table <table_name> &#x2F;&#x2F; 更新某个表中索引各个字段的cardinality</li></ol><p><strong>自动更新：</strong></p><ol><li>增删索引，加列， 清空表等涉及数据修改的DDL时；</li><li>后台线程发现表更新的记录超过表记录总数的1&#x2F;10时。</li></ol><h4 id="有触发过统计数据的日志吗？"><a href="#有触发过统计数据的日志吗？" class="headerlink" title="有触发过统计数据的日志吗？"></a>有触发过统计数据的日志吗？</h4><p>这是mysql的系统自发的行为，只能查看到最后一次更新的记录，没有历史日志。</p><p>DBA执行了analyze table后数据被覆盖了，忘记对analyze table命令前最后一次统计信息进行查看。</p><h4 id="这类满查询的注意事项"><a href="#这类满查询的注意事项" class="headerlink" title="这类满查询的注意事项"></a>这类满查询的注意事项</h4><p>（1）判断索引区分度的方法</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(<span class="keyword">distinct</span> <span class="keyword">column</span>) <span class="operator">/</span><span class="keyword">select</span> <span class="built_in">count</span>(<span class="operator">*</span>)</span><br><span class="line"><span class="comment">-- 索引区分度要大于70% --</span></span><br></pre></td></tr></table></figure><p>（2）设置降级策略、设置限流</p><p>（3）添加系统告警</p>]]></content>
       

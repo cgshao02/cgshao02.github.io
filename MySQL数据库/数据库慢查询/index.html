@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数据库慢查询 | Future</title><meta name="author" content="CGShao"><meta name="copyright" content="CGShao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、遇到的慢查询问题1、表的索引区分度小导致的满查询为什么会命中不同的索引？  索引的选择是优化器的工作，mysql的优化器选择索引时会极大的依赖“统计信息”。但是本质原因是原来的索引区分度很差  统计信息又是什么时候执行的？统计信息更新分为手动更新与自动更新。 手动更新  ANALYZE table UPDATE HISTOGRAM ON  WITH  BUCKETS &#x2F;&#x2F;更">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库慢查询">
-<meta property="og:url" content="http://cgshao02.github.io/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%BB%A1%E6%9F%A5%E8%AF%A2/">
+<meta property="og:url" content="http://cgshao02.github.io/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%85%A2%E6%9F%A5%E8%AF%A2/">
 <meta property="og:site_name" content="Future">
 <meta property="og:description" content="一、遇到的慢查询问题1、表的索引区分度小导致的满查询为什么会命中不同的索引？  索引的选择是优化器的工作，mysql的优化器选择索引时会极大的依赖“统计信息”。但是本质原因是原来的索引区分度很差  统计信息又是什么时候执行的？统计信息更新分为手动更新与自动更新。 手动更新  ANALYZE table UPDATE HISTOGRAM ON  WITH  BUCKETS &#x2F;&#x2F;更">
 <meta property="og:locale" content="zh_CN">
@@ -12,7 +12,7 @@
 <meta property="article:tag" content="后端开发">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://cgshao02.github.io/img/snake.jpeg"><link rel="shortcut icon" href="/img/snake.jpeg"><link rel="canonical" href="http://cgshao02.github.io/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%BB%A1%E6%9F%A5%E8%AF%A2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+<meta name="twitter:image" content="http://cgshao02.github.io/img/snake.jpeg"><link rel="shortcut icon" href="/img/snake.jpeg"><link rel="canonical" href="http://cgshao02.github.io/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%85%A2%E6%9F%A5%E8%AF%A2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
   localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
