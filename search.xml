@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Java开发规范</title>
+      <link href="/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/"/>
+      <url>/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/</url>
+      
+        <content type="html"><![CDATA[<h1 id="1、关于Object-的-equals"><a href="#1、关于Object-的-equals" class="headerlink" title="1、关于Object 的 equals"></a>1、关于Object 的 equals</h1><p><code>Object.equals()</code> 方法是 Java 语言中的一个基础方法，用来比较两个对象是否相等。以下是它的源代码实现：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">equals</span><span class="params">(Object obj)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="built_in">this</span> == obj);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>我们需要注意的是，<code>Object</code> 的 <code>equals()</code> 方法是根据对象的引用来判断两个对象是否相等的，而不是根据对象的内容。如果我们要比较两个对象的内容是否相等，我们需要重写 <code>equals()</code> 方法，这样就可以根据对象的具体内容来判断它们是否相等了。不再详述。</p><p>Java 中的 <code>Objects.equals()</code> 方法实际上是由 Java 中的 <code>Objects</code> 类提供的静态方法，以下是它的源代码：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">equals</span><span class="params">(Object a, Object b)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (a == b) || (a != <span class="literal">null</span> &amp;&amp; a.equals(b));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>我们需要注意的是，这个方法中使用的是逻辑或运算符 (<code>||</code>)。首先检查第一个条件是否为 <code>true</code>，只有当第一个条件为 <code>false</code> 时才会执行第二个条件。这种方式在 Java 中有时被称为 “short-circuiting”。这里也就是短路或，这种技巧可以用来提高代码的效率，避免执行不必要的操作。</p><p><code>Objects.equals()</code> 方法是 Java 中用于比较两个对象是否相等的一个实用工具方法，它可以处理对象为 <code>null</code> 的情况，避免了因对象为 <code>null</code> 而产生 <code>NullPointerException</code> 的问题。具体来说，如果两个参数都是 <code>null</code>，则返回 <code>true</code>；如果一个参数是 <code>null</code> 而另一个不是 <code>null</code>，则返回 <code>false</code>；否则，调用第一个参数的 <code>equals</code> 方法进行比较。这样就避免了空指针异常了。</p><h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>Object的equals方法容易抛出空指针异常，应使用常量或确定有值的对象来调用equals。</p><p><strong>正</strong>： “test”.equals(object)</p><p><strong>反</strong>： object.equals(“test”)</p><p><strong>推荐使用JDK7引入的工具类 java.util.Objects#equals(Object a, Object b)</strong></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java开发规范 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java开发规范 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MySQL自增主键与UUID</title>
       <link href="/MySQL/MySQL%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%8EUUID/"/>
       <url>/MySQL/MySQL%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%8EUUID/</url>
