@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title>线程池-核心参数推荐</title>
+      <link href="/%E7%BA%BF%E7%A8%8B%E6%B1%A0/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/%E7%BA%BF%E7%A8%8B%E6%B1%A0-%E6%A0%B8%E5%BF%83%E5%8F%82%E6%95%B0%E6%8E%A8%E8%8D%90/"/>
+      <url>/%E7%BA%BF%E7%A8%8B%E6%B1%A0/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/%E7%BA%BF%E7%A8%8B%E6%B1%A0-%E6%A0%B8%E5%BF%83%E5%8F%82%E6%95%B0%E6%8E%A8%E8%8D%90/</url>
+      
+        <content type="html"><![CDATA[<h1 id="线程池-核心参数设置推荐"><a href="#线程池-核心参数设置推荐" class="headerlink" title="线程池-核心参数设置推荐"></a>线程池-核心参数设置推荐</h1><p>$$<br>corePoolSize &#x3D; \frac{1s需要执行的并发任务数}{1个线程1s可执行任务数} &#x3D; \frac{每台机器qps * 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} &#x3D; \frac{\frac{qps}{服务器数量}* 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}}<br>$$</p><p>$$<br>maximumPoolSize &#x3D; 2 * corePoolSize<br>$$</p><p>$$<br>queusSize &#x3D; maximumPoolSize * \frac{1000ms * 最多等待的秒数}{每个任务的平均耗时}<br>$$<br><strong>线程池参数设置标准：</strong></p><p>线程池3个标准参数分别是corePoolSize（核心线程数）、maximumPoolSize（最大线程数）、queueSize（队列长度），关于这三个参数的作用可以参考一下引用：</p><blockquote><p>首先，所有任务的调度都是由execute方法完成的，这部分完成的工作是：检查现在线程池的运行状态、运行线程数、运行策略，决定接下来执行的流程，是直接申请线程执行，或是缓冲到队列中执行，亦或是直接拒绝该任务。其执行过程如下：</p><ol><li>首先检测线程池运行状态，如果不是RUNNING，则直接拒绝，线程池要保证在RUNNING的状态下执行任务。</li><li>如果workerCount &lt; corePoolSize，则创建并启动一个线程来执行新提交的任务。</li><li>如果workerCount &gt;&#x3D; corePoolSize，且线程池内的阻塞队列未满，则将任务添加到该阻塞队列中。</li><li>如果workerCount &gt;&#x3D; corePoolSize &amp;&amp; workerCount &lt; maximumPoolSize，且线程池内的阻塞队列已满，则创建并启动一个线程来执行新提交的任务。</li><li>如果workerCount &gt;&#x3D; maximumPoolSize，并且线程池内的阻塞队列已满, 则根据拒绝策略来处理该任务, 默认的处理方式是直接抛异常。</li></ol></blockquote><p>❤️<strong>在考虑如何设置这三个参数之前，首先需要明确的问题是：这3个参数不可能在代码阶段就能确定最优值，只能在上线之后根据实际情况进行调整。基于这个前提，我们需要确认的两个问题如下：</strong></p><ol><li><strong>如何在代码阶段确定相对靠谱的3值</strong></li><li><strong>如何在上线之后进行调整</strong></li></ol><p><strong>编码阶段确定核心3值：</strong></p><p>这3个值主要跟以下几个要素有关：<strong>接口qps、服务器数量、每个接口中的异步线程数量、每个异步线程的耗时</strong>。</p><p>这里需要重点说明一下，一些比较权威的书籍或论文中都会以cpu核数、cpu利用率、cpu等待时间和cpu计算时间用于计算每台机器应该开辟多少线程，但这种方式根本没有考虑实际情况，无法进行逻辑，所以我们现在只根据业务的实际场景讨论适合我们自己的3值设置方式。</p><p>一般我们都会认为核心线程数根据平峰期的qps来计算，最大线程数根据高峰期qps来计算，但是这样计算风险太高了，所以我们可以用高峰期的qps来计算核心线程数，最大线程数设置为核心线程数的2倍这种计算方式。<strong>根据高峰期qps</strong>计算核心线程数的方式如下<br>$$<br>corePoolSize &#x3D; \frac{1s需要执行的并发任务数}{1个线程1s可执行任务数} &#x3D; \frac{每台机器qps * 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} &#x3D; \frac{\frac{qps}{服务器数量}* 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}}<br>$$<br>比如，我们判断一个接口的qps为500，线上有10台服务器，接口共调用了5个并发任务，每个任务平均年耗时200ms，那么计算方式就是：<br>$$<br>corePoolSize &#x3D; \frac{\frac{500}{10}*5}{\frac{1000}{200}} &#x3D; 50<br>$$</p><p>$$<br>maximumPoolSize &#x3D; 2 * corePoolSize &#x3D; 100<br>$$</p><p>在确定了corePoolSize和maximumPoolSize之后，如何确定队列长度呢？其实我们设想一个极端场景就可以了，比如所有maximumPoolSize线程都在满负荷工作，我们希望队列最后一个待执行任务等多久？如果我们希望它最多等1秒，那么所有线程满负荷工作1秒可以处理的线程数就应该是队列长度，如果是最多等待2秒，那就应该是所有线程2秒可以执行的任务数就是队列长度，计算方式如下：<br>$$<br>queueSize &#x3D; maximumPoolSize * \frac{1000ms * 最多等待的秒数}{每个任务的平均耗时}<br>$$</p><p>还是基于上述示例计算队列长度，应该为：<br>$$<br>queueSize &#x3D; 100 * \frac{1000ms*2}{200ms} &#x3D; 1000<br>$$</p><p><strong>综上所述，如果我们判断一个接口的qps为500，线上有10台服务器，接口共调用了5个并发任务，每个任务平均年耗时200ms，并且我们希望每个任务等待不要超过2秒，那么核心线程数应该设置为50，最大线程数设置为100，队列设置为1000</strong></p><p>另外需要注意的是，推荐每个接口自己使用自己的线程池，不要两个接口同时使用同一个线程池，否则上述计算指标中的【当前接口并发任务数】不容易计算，并且与【当前接口qps】也对应不起来。如果个别场景确认需要多个接口复用同一个线程池，只能采用每个接口分别计算3值然后相加的方式，从而最大限度地保证安全。</p><p><strong>程序运行期间如何修改3值：</strong></p><p>比如我们发现活跃线程数远远没有达到核心线程数，就可以适当减小核心线程；</p><p>比如我们发现有任务被拒绝，我们就可以适当增加最大线程数或者增加队列长度；</p><p>如果我们发现任务等待时间非常长，并且线程活跃数已经到达最大线程数，那就应该考虑是继续增加线程数来提高处理速度，还是要减小队列长度来拒绝部分任务以保护自身服务。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>🩵<br>$$<br>corePoolSize &#x3D; \frac{1s需要执行的并发任务数}{1个线程1s可执行任务数} &#x3D; \frac{每台机器qps * 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} &#x3D; \frac{\frac{qps}{服务器数量}* 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}}<br>$$</p><p>$$<br>maximumPoolSize &#x3D; 2 * corePoolSize<br>$$</p><p>$$<br>queusSize &#x3D; maximumPoolSize * \frac{1000ms * 最多等待的秒数}{每个任务的平均耗时}<br>$$</p><p><strong>总结：</strong></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 线程池 </category>
+          
+          <category> 实际开发 </category>
+          
+          <category> Java开发规范 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java开发规范 </tag>
+            
+            <tag> 实际开发 </tag>
+            
+            <tag> 线程池 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MySQL日期类型浅析</title>
       <link href="/MySQL/MySQL%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%9E%8B%E6%B5%85%E6%9E%90/"/>
       <url>/MySQL/MySQL%E6%97%A5%E6%9C%9F%E7%B1%BB%E5%9E%8B%E6%B5%85%E6%9E%90/</url>
@@ -91,9 +124,9 @@
       
         <tags>
             
-            <tag> Spring </tag>
-            
             <tag> 实际开发 </tag>
+            
+            <tag> Spring </tag>
             
         </tags>
       
@@ -312,34 +345,9 @@
       
         <tags>
             
-            <tag> 后端开发 </tag>
-            
             <tag> MySQL </tag>
             
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>hexo踩坑纪录</title>
-      <link href="/Hexo%E6%95%99%E7%A8%8B/hexo%E8%B8%A9%E5%9D%91%E7%BA%AA%E5%BD%95/"/>
-      <url>/Hexo%E6%95%99%E7%A8%8B/hexo%E8%B8%A9%E5%9D%91%E7%BA%AA%E5%BD%95/</url>
-      
-        <content type="html"><![CDATA[<h2 id="点击页面跳转-变成了-下载lianje"><a href="#点击页面跳转-变成了-下载lianje" class="headerlink" title="点击页面跳转 变成了 下载lianje"></a>点击页面跳转 变成了 下载lianje</h2><p>查阅之后发现问题所在是在config配置文件中的</p><p>｜permalink: :title&#x2F;</p><p>少写了最后的&#x2F;，就会出现以上情况</p><p>同时如果少写了：，点击文章就会变成跳转到第一篇博文，跳转不了别的文章。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Hexo教程 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Hexo </tag>
+            <tag> 后端开发 </tag>
             
         </tags>
       
@@ -365,8 +373,6 @@
         <tags>
             
             <tag> Java基础 </tag>
-            
-            <tag> 后端开发 </tag>
             
         </tags>
       
