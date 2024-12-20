@@ -4,6 +4,75 @@
   
     
     <entry>
+      <title>redis实践</title>
+      <link href="/redis/redis%E5%AE%9E%E8%B7%B5/"/>
+      <url>/redis/redis%E5%AE%9E%E8%B7%B5/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Redis-最佳场景-小容量、热数据"><a href="#Redis-最佳场景-小容量、热数据" class="headerlink" title="Redis 最佳场景 小容量、热数据"></a>Redis 最佳场景 小容量、热数据</h2><h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><p>选择合适的数据结构</p><p>杜绝BigKey HotKey</p><p>避免复杂操作</p><p>不要过度使用</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> redis </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> redis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>golang入门day01</title>
+      <link href="/GO/golang%E5%85%A5%E9%97%A8day01/"/>
+      <url>/GO/golang%E5%85%A5%E9%97%A8day01/</url>
+      
+        <content type="html"><![CDATA[<h1 id="GoLang入门"><a href="#GoLang入门" class="headerlink" title="GoLang入门"></a>GoLang入门</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>为什么要写开这个坑呢?<br>1、不手写一下博客,自己遗忘速度会太快<br>2、希望通过开这个坑能够督促自己学习</p><h2 id="一、-struct"><a href="#一、-struct" class="headerlink" title="一、 struct"></a>一、 struct</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> person <span class="keyword">struct</span> &#123;</span><br><span class="line">name <span class="type">string</span></span><br><span class="line">age  <span class="type">uint</span></span><br><span class="line">addr address</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> address <span class="keyword">struct</span> &#123;</span><br><span class="line">province <span class="type">string</span></span><br><span class="line">city     <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line"></span><br><span class="line">per := person&#123;</span><br><span class="line">age:  <span class="number">12</span>,</span><br><span class="line">name: <span class="string">&quot;zuolong&quot;</span>,</span><br><span class="line">addr: address&#123;</span><br><span class="line">province: <span class="string">&quot;beijing&quot;</span>,</span><br><span class="line">city:     <span class="string">&quot;beijing&quot;</span>,</span><br><span class="line">&#125;,</span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(per)</span><br><span class="line">fmt.Println(per.addr.province)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h2 id="二、-interface"><a href="#二、-interface" class="headerlink" title="二、 interface"></a>二、 interface</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> GO </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>分布式锁</title>
+      <link href="/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"/>
+      <url>/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/</url>
+      
+        <content type="html"><![CDATA[<h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><p>分布式锁实践—待总结</p><h1 id="基于Redis-Cluster-模式下的分布式锁的实现"><a href="#基于Redis-Cluster-模式下的分布式锁的实现" class="headerlink" title="基于Redis Cluster 模式下的分布式锁的实现"></a>基于Redis Cluster 模式下的分布式锁的实现</h1><h2 id="基于setnx锁实现"><a href="#基于setnx锁实现" class="headerlink" title="基于setnx锁实现"></a>基于setnx锁实现</h2><p><strong>加锁</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setnx k v</span><br></pre></td></tr></table></figure><br>key做为锁的唯一标识,当setnx返回1时,说明原本key不存在,该线程成功得到了锁;如果返回的结果为0,则说明key已经存在,线程获取失败</p><p><strong>解锁</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">del key</span><br></pre></td></tr></table></figure></p><p><strong>通过制定key的过期时间,让锁到期后自动释放</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; set key value [EX seconds] [PX milliseconds] [NX|XX]</span><br></pre></td></tr></table></figure><br>EX seconds：设置键key的过期时间，单位时秒;</p><p>PX milliseconds：设置键key的过期时间，单位时毫秒;</p><p>NX：只有键key不存在的时候才会设置key的值；</p><p>XX：只有键key存在的时候才会设置key的值。</p><pre><code>通过 set (key, value, EX a,NX） 取代setnx 来实现原子加锁(自动释放锁)操作。</code></pre><h2 id="基于Redis实现分布式锁的一些问题"><a href="#基于Redis实现分布式锁的一些问题" class="headerlink" title="基于Redis实现分布式锁的一些问题"></a>基于Redis实现分布式锁的一些问题</h2><p>在高并发下的分布式锁实现中，key的过期肯定不能设置的太长，否则会影响后续线程持有该锁；</p><p>但是如果设置过期时间很短，直到key过期，持有该锁的线程还未执行完任务；接着下一个线程获取到该锁，这时候前一个线程执行完成后触发del释放该锁，而这把锁这个时候其实是另外一个线程持有；</p><p>获取锁是非阻塞的，无论成功还是失败就直接返回；</p><p>锁公平问题，所有等待线程同时发起获取锁命令操作。</p><pre><code>针对上述问题需要另外服务来保证实现：</code></pre><p>守护线程：如果某个线程在expire时间内，还未执行完成，守护线程自动expire一个新过期时间，直到该线程执行完成或释放；</p><p>释放验证：线程加锁前通过线程ID和Key Value匹配，释放前通过两者判断是否一致，一致再释放该锁，避免错误释放其他线程执行时持有相同的锁(原子性可以通过lua脚本来实现)；</p><p>阻塞锁： 通过while true之类的机制去阻塞代码实现；</p><p>公平锁：可以通过将所有等待线程放入同一个队列来实现。</p><p>可重入性</p><p>  Java中的Lock对象以及Synchronized关键字语块都可具有可重入性，可以实现同一个线程中共用同一把锁；避免死锁发生的可能。</p><p>  而在Redis上述实现中则没有相应的功能，如果业务上需要，则需在业务代码中实现其逻辑。</p><p> 安全性</p><p>  Redis Cluster 在master异常情况下，会发生主从切换，而主从是异步复制，极大可能导致数据丢失，从而导致锁的失效。这块安全性方面Redis Cluster 无法保证。</p><p>  但是Redis 作者实现了基于多节点的高可用分布式锁的算法 RedLock。有兴趣的可以了解一下。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 实际开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 实际开发 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Spring循环依赖</title>
       <link href="/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/Spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/"/>
       <url>/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/Spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/</url>
