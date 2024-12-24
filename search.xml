@@ -273,9 +273,9 @@
             
             <tag> Java基础 </tag>
             
-            <tag> 实际开发 </tag>
-            
             <tag> CompletableFuture </tag>
+            
+            <tag> 实际开发 </tag>
             
         </tags>
       
@@ -300,9 +300,9 @@
       
         <tags>
             
-            <tag> Java开发规范 </tag>
-            
             <tag> 实际开发 </tag>
+            
+            <tag> Java开发规范 </tag>
             
             <tag> 线程池 </tag>
             
