@@ -20,15 +20,15 @@
   <title>线程池-核心参数推荐 - Future</title>
 
   
-    <meta name="description" content="线程池-核心参数设置推荐 corePoolSize &#x3D; \frac{1s需要执行的并发任务数}{1个线程1s可执行任务数} &#x3D; \frac{每台机器qps * 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} &#x3D; \frac{\frac{qps}{服务器数量}* 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} maximumPool">
+    <meta name="description" content="线程池-核心参数设置推荐corePoolSize &#x3D; \frac{1s需要执行的并发任务数}{1个线程1s可执行任务数} &#x3D; \frac{每台机器qps * 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} &#x3D; \frac{\frac{qps}{服务器数量}* 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}}maximumPoolSi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线程池-核心参数推荐">
 <meta property="og:url" content="http://cgshao02.github.io/%E7%BA%BF%E7%A8%8B%E6%B1%A0/%E7%BA%BF%E7%A8%8B%E6%B1%A0-%E6%A0%B8%E5%BF%83%E5%8F%82%E6%95%B0%E6%8E%A8%E8%8D%90/">
 <meta property="og:site_name" content="Future">
-<meta property="og:description" content="线程池-核心参数设置推荐 corePoolSize &#x3D; \frac{1s需要执行的并发任务数}{1个线程1s可执行任务数} &#x3D; \frac{每台机器qps * 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} &#x3D; \frac{\frac{qps}{服务器数量}* 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} maximumPool">
+<meta property="og:description" content="线程池-核心参数设置推荐corePoolSize &#x3D; \frac{1s需要执行的并发任务数}{1个线程1s可执行任务数} &#x3D; \frac{每台机器qps * 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} &#x3D; \frac{\frac{qps}{服务器数量}* 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}}maximumPoolSi">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-11-01T08:34:26.000Z">
-<meta property="article:modified_time" content="2024-12-27T08:37:57.142Z">
+<meta property="article:modified_time" content="2024-12-27T08:44:28.891Z">
 <meta property="article:author" content="CGShao">
 <meta property="article:tag" content="实际开发">
 <meta property="article:tag" content="Java开发规范">
@@ -192,7 +192,7 @@ mjx-container[display="true"] + br {
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">线程池</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-11-01T08:34:26.000Z">2024-11-01</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-12-27T08:37:57.142Z">2024-12-27</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-11-01T08:34:26.000Z">2024-11-01</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-12-27T08:44:28.891Z">2024-12-27</time></span></div></div></div>
     
     <div class="bottom only-title">
       
@@ -203,10 +203,8 @@ mjx-container[display="true"] + br {
     </div>
     
   </div>
-  </div><article class="md-text content"><h1 id="线程池-核心参数设置推荐"><a href="#线程池-核心参数设置推荐" class="headerlink" title="线程池-核心参数设置推荐"></a>线程池-核心参数设置推荐</h1><script type="math/tex; mode=display">
-corePoolSize = \frac{1s需要执行的并发任务数}{1个线程1s可执行任务数} = \frac{每台机器qps * 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} = \frac{\frac{qps}{服务器数量}* 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}}</script><script type="math/tex; mode=display">
-maximumPoolSize = 2 * corePoolSize</script><script type="math/tex; mode=display">
-queusSize = maximumPoolSize * \frac{1000ms * 最多等待的秒数}{每个任务的平均耗时}</script><p><strong>线程池参数设置标准：</strong></p>
+  </div><article class="md-text content"><h1 id="线程池-核心参数设置推荐"><a href="#线程池-核心参数设置推荐" class="headerlink" title="线程池-核心参数设置推荐"></a>线程池-核心参数设置推荐</h1><div class="tag-plugin colorful note" color="green"><div class="body"><script type="math/tex; mode=display">corePoolSize = \frac{1s需要执行的并发任务数}{1个线程1s可执行任务数} = \frac{每台机器qps * 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} = \frac{\frac{qps}{服务器数量}* 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}}</script><script type="math/tex; mode=display">maximumPoolSize = 2 * corePoolSize</script><script type="math/tex; mode=display">queusSize = maximumPoolSize * \frac{1000ms * 最多等待的秒数}{每个任务的平均耗时}</script></div></div>
+<p><strong>线程池参数设置标准：</strong></p>
 <p>线程池3个标准参数分别是corePoolSize（核心线程数）、maximumPoolSize（最大线程数）、queueSize（队列长度），关于这三个参数的作用可以参考一下引用：</p>
 <blockquote>
 <p>首先，所有任务的调度都是由execute方法完成的，这部分完成的工作是：检查现在线程池的运行状态、运行线程数、运行策略，决定接下来执行的流程，是直接申请线程执行，或是缓冲到队列中执行，亦或是直接拒绝该任务。其执行过程如下：</p>
