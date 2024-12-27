@@ -28,7 +28,7 @@
 <meta property="og:description" content="线程池-核心参数设置推荐 corePoolSize &#x3D; \frac{1s需要执行的并发任务数}{1个线程1s可执行任务数} &#x3D; \frac{每台机器qps * 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} &#x3D; \frac{\frac{qps}{服务器数量}* 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} maximumPool">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-11-01T08:34:26.000Z">
-<meta property="article:modified_time" content="2024-11-04T09:01:37.026Z">
+<meta property="article:modified_time" content="2024-12-27T08:00:48.147Z">
 <meta property="article:author" content="CGShao">
 <meta property="article:tag" content="实际开发">
 <meta property="article:tag" content="Java开发规范">
@@ -44,12 +44,125 @@
 
   <link rel="stylesheet" href="/css/main.css?v=1.29.1">
 
-  
 
   
 
   
-</head>
+
+  
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 <body>
 
 <div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
@@ -66,7 +179,7 @@
 <div class="widgets">
 
 
-<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/redis/redis%E5%AE%9E%E8%B7%B5/"><span class="title">redis实践</span></a><a class="item title" href="/GO/golang(%E5%85%A5%E9%97%A8)struct%20&%20interface%20&%20%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80/"><span class="title">golang(入门)struct & interface & 类型断言</span></a><a class="item title" href="/GO/golang%EF%BC%88%E5%85%A5%E9%97%A8%EF%BC%89%E5%88%9D%E5%A7%8B%E5%8C%96/"><span class="title">golang（入门）初始化</span></a><a class="item title" href="/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"><span class="title">分布式锁</span></a><a class="item title" href="/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/Spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/"><span class="title">Spring循环依赖</span></a><a class="item title" href="/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/fullGC/"><span class="title">fullGC</span></a><a class="item title" href="/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/Java%E5%9F%BA%E7%A1%80/ScheduledExecutorService%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/"><span class="title">ScheduledExecutorService常用方法</span></a><a class="item title" href="/Java%E5%9F%BA%E7%A1%80/%E8%8C%83%E5%9E%8B/"><span class="title">范型</span></a><a class="item title" href="/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/%E6%97%A5%E5%BF%97%E6%89%93%E5%8D%B0%E8%A7%84%E8%8C%83-continue/"><span class="title">日志打印规范-continue</span></a><a class="item title" href="/git/git/"><span class="title">git</span></a></div></widget>
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/%E7%BA%BF%E7%A8%8B%E6%B1%A0/%E7%BA%BF%E7%A8%8B%E6%B1%A0-%E6%A0%B8%E5%BF%83%E5%8F%82%E6%95%B0%E6%8E%A8%E8%8D%90/"><span class="title">线程池-核心参数推荐</span></a><a class="item title" href="/redis/redis%E5%AE%9E%E8%B7%B5/"><span class="title">redis实践</span></a><a class="item title" href="/GO/golang(%E5%85%A5%E9%97%A8)struct%20&%20interface%20&%20%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80/"><span class="title">golang(入门)struct & interface & 类型断言</span></a><a class="item title" href="/GO/golang%EF%BC%88%E5%85%A5%E9%97%A8%EF%BC%89%E5%88%9D%E5%A7%8B%E5%8C%96/"><span class="title">golang（入门）初始化</span></a><a class="item title" href="/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"><span class="title">分布式锁</span></a><a class="item title" href="/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/Spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/"><span class="title">Spring循环依赖</span></a><a class="item title" href="/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/fullGC/"><span class="title">fullGC</span></a><a class="item title" href="/%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91/Java%E5%9F%BA%E7%A1%80/ScheduledExecutorService%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/"><span class="title">ScheduledExecutorService常用方法</span></a><a class="item title" href="/Java%E5%9F%BA%E7%A1%80/%E8%8C%83%E5%9E%8B/"><span class="title">范型</span></a><a class="item title" href="/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/%E6%97%A5%E5%BF%97%E6%89%93%E5%8D%B0%E8%A7%84%E8%8C%83-continue/"><span class="title">日志打印规范-continue</span></a></div></widget>
 </div>
 
 </div></aside><div class="l_main" id="main">
@@ -79,7 +192,7 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">线程池</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-11-01T08:34:26.000Z">2024-11-01</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-11-04T09:01:37.026Z">2024-11-04</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-11-01T08:34:26.000Z">2024-11-01</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-12-27T08:00:48.147Z">2024-12-27</time></span></div></div></div>
     
     <div class="bottom only-title">
       
@@ -183,7 +296,7 @@ queusSize = maximumPoolSize * \frac{1000ms * 最多等待的秒数}{每个任务
     ctx.search = {};
     ctx.search.service = `local_search`;
     if (ctx.search.service == 'local_search') {
-      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"codeblock":true,"sort":"-date"}`);
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"codeblock":true,"sort":"-date"}`);
       ctx.search[ctx.search.service] = service_obj;
     }
   }
@@ -485,7 +598,7 @@ queusSize = maximumPoolSize * \frac{1000ms * 最多等待的秒数}{每个任务
 
 <script defer>
   window.addEventListener('DOMContentLoaded', (event) => {
-    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"}}`));
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"}}`));
     for (let id of Object.keys(ctx.services)) {
       const js = ctx.services[id].js;
       if (id == 'siteinfo') {
@@ -605,6 +718,26 @@ queusSize = maximumPoolSize * \frac{1000ms * 最多等待的秒数}{每个任务
       })
     }
   });
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    processEscapes: true
+  }
+});
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+});
+MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for(i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
 </script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
