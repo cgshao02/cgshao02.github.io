@@ -28,7 +28,7 @@
 <meta property="og:description" content="线程池-核心参数设置推荐 corePoolSize &#x3D; \frac{1s需要执行的并发任务数}{1个线程1s可执行任务数} &#x3D; \frac{每台机器qps * 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} &#x3D; \frac{\frac{qps}{服务器数量}* 当前接口并发任务数}{\frac{1000ms}{每个任务的平均耗时(ms)}} maximumPool">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-11-01T08:34:26.000Z">
-<meta property="article:modified_time" content="2024-12-27T08:00:48.147Z">
+<meta property="article:modified_time" content="2024-12-27T08:37:57.142Z">
 <meta property="article:author" content="CGShao">
 <meta property="article:tag" content="实际开发">
 <meta property="article:tag" content="Java开发规范">
@@ -192,7 +192,7 @@ mjx-container[display="true"] + br {
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%BA%BF%E7%A8%8B%E6%B1%A0/">线程池</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-11-01T08:34:26.000Z">2024-11-01</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-12-27T08:00:48.147Z">2024-12-27</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-11-01T08:34:26.000Z">2024-11-01</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-12-27T08:37:57.142Z">2024-12-27</time></span></div></div></div>
     
     <div class="bottom only-title">
       
@@ -719,6 +719,7 @@ queusSize = maximumPoolSize * \frac{1000ms * 最多等待的秒数}{每个任务
     }
   });
 </script>
+<link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
