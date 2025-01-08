@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>【Mysql】update 行锁？表锁</title>
+      <link href="/MySQL/%E3%80%90Mysql%E3%80%91update-%E8%A1%8C%E9%94%81%EF%BC%9F%E8%A1%A8%E9%94%81/"/>
+      <url>/MySQL/%E3%80%90Mysql%E3%80%91update-%E8%A1%8C%E9%94%81%EF%BC%9F%E8%A1%A8%E9%94%81/</url>
+      
+        <content type="html"><![CDATA[<h1 id="MySQL-中-update语句-where-是行锁-还是-表锁"><a href="#MySQL-中-update语句-where-是行锁-还是-表锁" class="headerlink" title="MySQL 中 update语句 where 是行锁 还是 表锁?"></a>MySQL 中 update语句 where 是行锁 还是 表锁?</h1><p><strong>结论</strong><br>&gt;<br>Update时，where中的过滤条件列，如果用索引，锁行，无法用索引，锁表。按照索引规则，如果能使用索引，锁行，不能使用索引，锁表。<br>Insert，delete时，锁行。<br>InnoDB行锁是通过给索引上的索引项加锁来实现的，只有通过索引条件检索数据，InnoDB才使用行级锁，否则，InnoDB将使用表锁。<br>&gt;</p><p>注意点一<br>如果两个update语句同时执行，第一个先执行触发行锁，但是第二个没有索引触发表锁，因为有个行锁住了，所以还是会等待行锁释放，才能锁表。</p><p>注意点二<br>在高并发情况下，如果等待时间过长，会出现超时报错</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> MySQL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>GoLang(入门)匿名函数和闭包</title>
       <link href="/GO/GoLang-%E5%85%A5%E9%97%A8-%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E5%92%8C%E9%97%AD%E5%8C%85/"/>
       <url>/GO/GoLang-%E5%85%A5%E9%97%A8-%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E5%92%8C%E9%97%AD%E5%8C%85/</url>
