@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>【MySQL】最佳实践</title>
+      <link href="/MySQL/%E3%80%90MySQL%E3%80%91%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/"/>
+      <url>/MySQL/%E3%80%90MySQL%E3%80%91%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</url>
+      
+        <content type="html"><![CDATA[<h1 id="MySQL-最佳实践"><a href="#MySQL-最佳实践" class="headerlink" title="MySQL 最佳实践"></a>MySQL 最佳实践</h1><h2 id="一、-Schema设计原则"><a href="#一、-Schema设计原则" class="headerlink" title="一、 Schema设计原则"></a>一、 Schema设计原则</h2><ul><li>字段选择合适的存储类型和大小</li><li>为了高并发 , 禁止使用外键</li><li>尽量使用bigint等顺序数据作为主键</li><li>字符集和库表等设计要一致,不要单独定义字段的字符集</li></ul><h2 id="二、字段设计规范"><a href="#二、字段设计规范" class="headerlink" title="二、字段设计规范"></a>二、字段设计规范</h2><ul><li>每个表建议不要超过50个字段</li><li>优先选择utf8mb4字符集</li><li>用好INT数据类型,存储整形数据的时候,最好加上UNSIGNED关键字,可以扩大存储范围</li><li>遇到BLOB, TEXT类型数据, 尽量拆出去,然后使用主键进行关联</li><li>使用varchar时,在满足业务的情况下,尽可能设定合适长度</li><li>日期时间类型建议采用datetime数据类型,虽然datetime比timestamp 要多1字节,但是能存储的时间范围要更大</li><li>严谨在数据库中存储用户的一些核心明文数据, 如密码</li></ul><h2 id="三、SQL-开发建议"><a href="#三、SQL-开发建议" class="headerlink" title="三、SQL 开发建议"></a>三、SQL 开发建议</h2><ul><li>小表驱动大表</li><li>Join 的多个表字符集要一致(不然可能会出现 不走索引的情形)</li></ul><ul><li>分析SQL的出现频率和代价，有针对性的创建索引</li><li>尽量不要执行select *，有什么字段就取什么字段，假如有大对象数据列，额外的IO代价就太大了</li><li>不要执行like %xx，牢记最左匹配原则</li><li>尽量不要使用!=条件，因为可能造成更大的扫描范围（数据库在扫描数据量超过20%～30%范围的时候，会变成全表扫描）</li><li>如果能确定返回结果数量的话，最好加上Limit N(优化器通常会再进一步进行优化)</li><li>优先使用union all，而不是union，这样可以减少临时表的生成</li><li>UPDATE、DELETE语句的WHERE条件列需要添加索引，否则每次更新就是表锁</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> MySQL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>【Mysql】update 行锁？表锁</title>
       <link href="/MySQL/%E3%80%90Mysql%E3%80%91update-%E8%A1%8C%E9%94%81%EF%BC%9F%E8%A1%A8%E9%94%81/"/>
       <url>/MySQL/%E3%80%90Mysql%E3%80%91update-%E8%A1%8C%E9%94%81%EF%BC%9F%E8%A1%A8%E9%94%81/</url>
